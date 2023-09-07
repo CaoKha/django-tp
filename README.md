@@ -17,7 +17,8 @@ Verify if poetry is installed properly
 ```bash
 poetry --version
 ```
-- Init virtual environment with `poetry`:
+- Initialize project with `poetry`, this will create a `pyproject.toml` file. 
+If you work with `javascript`, it has litterally the same functionnality patterns. 
 ```bash
 poetry init
 ```
@@ -42,8 +43,21 @@ This will add django to pyproject.toml
 ```bash
 poetry install
 ```
-
-### 2. Setup Docker
+### 2. Initialize django
+- Start django project:
+```bash
+django-admin startproject tp_django .
+```
+- Adjust settings for different environements (dev, prod, etc...). First we create a folder name `settings` inside `tp_django`. 
+```bash
+mkdir tp_django/settings
+```
+Create 3 files: `__init__.py`, `default.py`, `dev.py`(for now, we only have developpement (dev) environment)
+- `__init__.py` is used to mark a directory as a Python package so that we can use dot operator to import .py file
+- `default.py` is the default config for settings. Everything in `tp_django/settings.py` is now move to `tp_django/settings/default.py`. 
+After creating `default.py`, delete the `tp_django/settings.py` file
+- `dev.py` is the config for developpement environment
+### 3. Setup Docker
 - Install docker by follow this [link](https://docs.docker.com/engine/install/debian/) (using Linux (Ubuntu/Debian) as OS is recommended)
 - Run application
 ```
