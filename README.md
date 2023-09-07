@@ -213,7 +213,7 @@ Remarque : Pourquoi `poetry`? Voici les avantages de `poetry` par rapport à `pi
 |Packaging|	Pas de packaging|	Fournit un packaging|
 |Publication|	Pas de publication|	Fournit une publication|
 
-Remarque: Si vous avez déjà l'expérience des fichiers package.json dans de nombreux projets JavaScript, il a littéralement les mêmes modèles de fonctionalités.
+Remarque: Si vous avez déjà l'expérience des fichiers `package.json` dans de nombreux projets `JavaScript`, il a littéralement les mêmes modèles de fonctionalités.
 
 - Vérifiez si poetry est installé correctement
 ```bash
