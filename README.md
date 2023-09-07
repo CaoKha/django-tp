@@ -1,6 +1,6 @@
 ## Steps
 ### 1. Installations
-- Go to the link for `pyenv` installation information [](https://github.com/pyenv/pyenv#unixmacos)
+- Go to the link for `pyenv` installation information [here](https://github.com/pyenv/pyenv#unixmacos)
 - After finish installing `pyenv`, install python version 3.11.5 (recommended) or later
 ```bash
 pyenv install 3.11.5
@@ -44,3 +44,12 @@ poetry install
 ```
 
 ### 2. Setup Docker
+- Install docker by follow this [link](https://docs.docker.com/engine/install/debian/) (using Linux (Ubuntu/Debian) as OS is recommended)
+- Run application
+```
+sudo docker compose up
+```
+- To rebuild application, run
+```
+sudo docker compose --build 
+```
