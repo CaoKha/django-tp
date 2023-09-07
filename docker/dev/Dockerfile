@@ -17,4 +17,3 @@ COPY poetry.lock pyproject.toml /app/
 RUN pip3 install poetry
 
 RUN poetry install
-
