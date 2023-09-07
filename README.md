@@ -1,4 +1,4 @@
-## Steps
+## Django setup with Docker
 ### 1. Installations
 - Go to the link for `pyenv` installation information [here](https://github.com/pyenv/pyenv#unixmacos)
 - After finish installing `pyenv`, install python version 3.11.5 (recommended) or later
@@ -13,7 +13,9 @@ pyenv install 3.11.5
 pyenv local 3.11.5
 ```
 - Install poetry
-
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
 Note: Why poetry? This is advantage of Poetry vs Pip 
 |Feature|	Pip|	Poetry|
 |--|--|--|
@@ -24,15 +26,12 @@ Note: Why poetry? This is advantage of Poetry vs Pip
 |Dependency management	|Basic dependency management	|Advanced dependency management|
 |Packaging	|No packaging	|Provides packaging|
 |Publishing|	No publishing|	Provides publishing|
-```bash
-curl -sSL https://install.python-poetry.org | python3 -
-```
-Verify if poetry is installed properly
+- Verify if poetry is installed properly
 ```bash
 poetry --version
 ```
 - Initialize project with `poetry`, this will create a `pyproject.toml` file. 
-If you work with `javascript`, it has litterally the same functionnality patterns. 
+If you already have experience with `package.json` in many javascript projects, it has litterally the same functionnality patterns. 
 ```bash
 poetry init
 ```
@@ -81,3 +80,5 @@ sudo docker compose up
 ```
 sudo docker compose --build 
 ```
+Now you can see application running as http://0.0.0.0:8000 just like normal django application
+To quit and stop container, in terminal, press `Ctrl+c` on your keyboard
