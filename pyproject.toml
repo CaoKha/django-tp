@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "django-docker-app"
+version = "0.1.0"
+description = "TP Django Docker"
+authors = ["KhaNguyen"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.5"
+django-admin = "^2.0.2"
+
+[tool.poetry.group.dev.dependencies]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
