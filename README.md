@@ -3,8 +3,8 @@
 - Go to the link for `pyenv` installation information [here](https://github.com/pyenv/pyenv#unixmacos)
 - After finish installing `pyenv`, install python version 3.11.5 (recommended) or later
 
-Note: Using pyenv allows us to work with different versions of python by switching between version locally without 
-installing many python versions globally on our computer.
+Note: Using pyenv allows us to work with different versions of python by switching between versions locally without the need to 
+install many python versions globally on our computer.
 ```bash
 pyenv install 3.11.5
 ```
@@ -12,6 +12,7 @@ pyenv install 3.11.5
 ```bash
 pyenv local 3.11.5
 ```
+Note: this will create a `.python-version` file in your current working directory
 - Install poetry
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
