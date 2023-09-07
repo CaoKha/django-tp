@@ -184,7 +184,8 @@ To quit and stop container, in terminal, press `Ctrl+c` on your keyboard
 ## Configuration de Django avec Docker
 ### 1. Installations
 - Installez `pyenv` en suivant les instructions [ici](https://github.com/pyenv/pyenv#unixmacos).
-Une fois `pyenv` installé, installez la version 3.11.5 de Python (recommandée) ou une version ultérieure.
+- Une fois `pyenv` installé, installez la version 3.11.5 de Python (recommandée) ou une version ultérieure.
+
 Remarque : L'utilisation de pyenv vous permet de travailler avec différentes versions de Python en changeant de versions localement sans avoir besoin d'installer de nombreuses versions de Python globalement sur votre ordinateur.
 
 ```bash
