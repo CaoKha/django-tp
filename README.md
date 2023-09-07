@@ -18,19 +18,12 @@ Note: Why poetry? This is advantage of Poetry vs Pip
 |Feature|	Pip|	Poetry|
 |--|--|--|
 |Platform|	Python|	Python|
-|--|--|--|
 |Ease of use|	Easy to use	|More complex|
-|--|--|--|
 |Features|	Few features|	Many features|
-|--|--|--|
 |Isolation|	No isolation|	Provides isolation|
-|--|--|--|
 |Dependency management	|Basic dependency management	|Advanced dependency management|
-|--|--|--|
 |Packaging	|No packaging	|Provides packaging|
-|--|--|--|
 |Publishing|	No publishing|	Provides publishing|
-|--|--|--|
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
