@@ -2,6 +2,9 @@
 ### 1. Installations
 - Go to the link for `pyenv` installation information [here](https://github.com/pyenv/pyenv#unixmacos)
 - After finish installing `pyenv`, install python version 3.11.5 (recommended) or later
+
+Note: Using pyenv allows us to work with different versions of python by switching between version locally without 
+installing many python versions globally on our computer.
 ```bash
 pyenv install 3.11.5
 ```
@@ -10,6 +13,24 @@ pyenv install 3.11.5
 pyenv local 3.11.5
 ```
 - Install poetry
+
+Note: Why poetry? This is advantage of Poetry vs Pip 
+|Feature|	Pip|	Poetry|
+|--|--|--|
+|Platform|	Python|	Python|
+|--|--|--|
+|Ease of use|	Easy to use	|More complex|
+|--|--|--|
+|Features|	Few features|	Many features|
+|--|--|--|
+|Isolation|	No isolation|	Provides isolation|
+|--|--|--|
+|Dependency management	|Basic dependency management	|Advanced dependency management|
+|--|--|--|
+|Packaging	|No packaging	|Provides packaging|
+|--|--|--|
+|Publishing|	No publishing|	Provides publishing|
+|--|--|--|
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
