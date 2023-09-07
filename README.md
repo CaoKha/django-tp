@@ -13,11 +13,11 @@ pyenv install 3.11.5
 pyenv local 3.11.5
 ```
 Note: this will create a `.python-version` file in your current working directory
-- Install poetry
+- Install `poetry`
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
-Note: Why poetry? This is advantage of Poetry vs Pip 
+Note: Why `poetry`? This is advantage of Poetry vs Pip 
 |Feature|	Pip|	Poetry|
 |--|--|--|
 |Platform|	Python|	Python|
@@ -79,11 +79,11 @@ touch tp_django/settings/dev.py
 Because our settings.py is now gone. We have to adjust `manage.py`, `tp_django/asgi.py` and `tp_django/wgsi`.
 Change this line:
 ```python
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tp_django.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tp_django.settings")
 ```
 to this line:
 ```python
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tp_django.settings.default")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tp_django.settings.default")
 ```
 ### 3. Setup Docker
 - Install docker by follow this [link](https://docs.docker.com/engine/install/debian/) (using Linux (Ubuntu/Debian) as OS is recommended)
