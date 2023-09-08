@@ -170,15 +170,23 @@ services:
       - "8000:8000"
 ```
 - Run application
-```
+```bash
 sudo docker compose up
 ```
 - To rebuild application, run
-```
+```bash
 sudo docker compose --build 
 ```
 Now you can see application running as http://0.0.0.0:8000 just like normal django application
 To quit and stop container, in terminal, press `Ctrl+c` on your keyboard
+- When you are done, don't forget to close down the Docker container:
+```bash
+sudo docker compose down
+```
+- Deactivate the virtualenv
+```bash
+deactivate
+```
 
 
 # French
@@ -370,4 +378,12 @@ sudo docker compose --build
 ```
 Vous pouvez maintenant voir l'application en cours d'exécution à l'adresse http://0.0.0.0:8000, comme une application Django normale.
 Pour quitter et arrêter le conteneur, appuyez sur Ctrl+c dans le terminal.
+- Lorsque vous avez terminé, n'oubliez pas de fermer le conteneur Docker.
+```bash
+sudo docker compose down
+```
+- Deactiver le `virtualenv`
+```bash
+deactivate
+```
 
