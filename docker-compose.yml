@@ -11,3 +11,7 @@ services:
     ports:
       # map your pc port (first number) to docker port (second number)
       - "8000:8000"
+  # db:
+  #   image: postgres:latest
+  #   restart: always
+  #   environment: 
