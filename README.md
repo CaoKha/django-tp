@@ -1,5 +1,6 @@
 # English
 ## Django setup with Docker
+If you clone this project to your local machine, you can skip to step 2
 ### 1. Installations
 - Go to the link for `pyenv` installation information [here](https://github.com/pyenv/pyenv#unixmacos)
 - After finish installing `pyenv`, install python version 3.11.5 (recommended) or later
@@ -182,6 +183,7 @@ To quit and stop container, in terminal, press `Ctrl+c` on your keyboard
 
 # French
 ## Configuration de Django avec Docker
+Si vous clonez ce projet sur votre machine locale, vous pouvez passer à l'étape 2.
 ### 1. Installations
 - Installez `pyenv` en suivant les instructions [ici](https://github.com/pyenv/pyenv#unixmacos).
 - Une fois `pyenv` installé, installez la version 3.11.5 de Python (recommandée) ou une version ultérieure.
