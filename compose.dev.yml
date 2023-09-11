@@ -1,0 +1,26 @@
+
+version: "3"
+
+services:
+  api:
+    env_file:
+      ./env/env.dev
+    command: "poetry run python manage.py runserver"
+    ports:
+      - "8000:8000" # map your container port (second number) to your localhost port (first number)
+  db:
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGPORT: 5433 # normally, the default port is 5432, this variable will change the default container port to 5433 
+    ports:
+      - "5434:5433" # map the containter port 5433 to your localhost port 5434  
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U","postgres","-d","postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+
