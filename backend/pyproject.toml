@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "django-docker-app"
 version = "0.1.0"
-description = "TP Django Docker"
+description = "Django Rest API with Docker"
 authors = ["KhaNguyen"]
 license = "MIT"
 readme = "README.md"
