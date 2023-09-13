@@ -155,10 +155,8 @@ AUTHENTICATION_BACKENDS = (
     "social_core.backends.google.GoogleOAuth2",
 )
 # Google configuration
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = (
-    "1037601038551-d7cg6obnjcccb7nf624gb23rv9b7v801.apps.googleusercontent.com"
-)
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 
 # Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
