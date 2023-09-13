@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "django-docker-app"
+version = "0.1.0"
+description = "Django Rest API with Docker"
+authors = ["KhaNguyen"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.5"
+django-admin = "^2.0.2"
+psycopg2-binary = "^2.9.7"
+djangorestframework = "^3.14.0"
+markdown = "^3.4.4"
+django-filter = "^23.2"
+drf-social-oauth2 = "^2.1.3"
+social-auth-core = "^4.4.2"
+django-cors-headers = "^4.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
