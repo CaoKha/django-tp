@@ -91,7 +91,7 @@ DATABASES = {
         "USER": os.environ.get("SQL_USER", "postgres"),
         "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),  # set in docker-compose.yml
-        "PORT": os.environ.get("SQL_PORT", "5434"),  # default postgres port
+        "PORT": os.environ.get("SQL_PORT", "5433"),  # default postgres port
     }
 }
 
