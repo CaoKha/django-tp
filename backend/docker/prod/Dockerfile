@@ -10,9 +10,9 @@ ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
 # create a folder /app inside docker container
-WORKDIR /app
+WORKDIR /app/backend
 
-COPY poetry.lock pyproject.toml /app/
+COPY ./backend/poetry.lock ./backend/pyproject.toml /app/backend/
 
 RUN pip3 install poetry
 
