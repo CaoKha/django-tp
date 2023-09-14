@@ -10,7 +10,7 @@ services:
     ports:
       - "5173:5173"
     env_file:
-      ./frontend/.env.dev
+      ./frontend/.env/.env.dev
 
   backend:
     build: 
