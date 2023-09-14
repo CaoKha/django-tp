@@ -1,10 +1,21 @@
 version: "3"
 
 services:
-  api:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./docker/dev/Dockerfile
+    volumes:
+      - ./frontend:/frontend
+    ports:
+      - "5173:5173"
+    env_file:
+      ./frontend/.env.dev
+
+  backend:
     build: 
-      context: .
-      dockerfile: ./backend/docker/dev/Dockerfile
+      context: ./backend
+      dockerfile: ./docker/dev/Dockerfile
     volumes:
       - ./backend:/app/backend
     depends_on:
@@ -13,9 +24,10 @@ services:
       ./backend/env/prod/env.django.prod
     command: sh -c "poetry run python manage.py makemigrations &&
       poetry run python manage.py migrate &&
-      poetry run python manage.py runserver 0.0.0.0:8000"
+      poetry run gunicorn django_app.wsgi:application --bind 0.0.0.0:8000"
     ports:
       - "8000:8000" # map your container port (second number) to your localhost port (first number)
+
   db:
     image: postgres:15
     restart: always
@@ -25,7 +37,7 @@ services:
     env_file:
       ./backend/env/prod/env.postgres.prod
     ports:
-      - "5433:5432" # map the containter port 5432 to your localhost port 5433  
+      - "5432:5432" # map the containter port 5432 to your localhost port 5433  
     healthcheck:
       test: [ "CMD", "pg_isready", "-U","postgres","-d","postgres" ]
       interval: 10s

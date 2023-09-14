@@ -12,21 +12,24 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import dotenv
+from common.utils import get_env_var
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+dotenv.load_dotenv(BASE_DIR / ".env/dev/.env.django.dev")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = get_env_var("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+DEBUG = get_env_var("DEBUG_ENABLED") == "true"
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(" ")
+ALLOWED_HOSTS = get_env_var("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -39,13 +42,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "oauth2_provider",
-    "social_django",
-    "drf_social_oauth2",
     "corsheaders",
+    "messages_api",
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -56,6 +56,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django_app.middleware.Auth0Middleware",
+    "csp.middleware.CSPMiddleware",
 ]
 
 ROOT_URLCONF = "django_app.urls"
@@ -71,8 +73,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "social_django.context_processors.backends",
-                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -80,18 +80,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "django_app.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.postgresql"),
-        "NAME": os.environ.get("SQL_DATABASE_NAME", "postgres"),
-        "USER": os.environ.get("SQL_USER", "postgres"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),  # set in docker-compose.yml
-        "PORT": os.environ.get("SQL_PORT", "5433"),  # default postgres port
+        "ENGINE": get_env_var("SQL_ENGINE"),
+        "NAME": get_env_var("SQL_DATABASE_NAME"),
+        "USER": get_env_var("SQL_USER"),
+        "PASSWORD": get_env_var("SQL_PASSWORD"),
+        "HOST": get_env_var("SQL_HOST"),  # set in docker-compose.yml
+        "PORT": get_env_var("SQL_PORT"),  # default postgres port
     }
 }
 
@@ -115,15 +114,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
-    ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
-        "drf_social_oauth2.authentication.SocialAuthentication",
-    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTTokenUserAuthentication"
+    ],
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+    ],
 }
 
 
@@ -138,6 +136,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+USE_L10N = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -149,17 +149,24 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTHENTICATION_BACKENDS = (
-    # "drf_social_oauth2.backends.DjangoOAuth2",
-    "django.contrib.auth.backends.ModelBackend",
-    "social_core.backends.google.GoogleOAuth2",
-)
-# Google configuration
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True
 
-# Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
-    "https://www.googleapis.com/auth/userinfo.email",
-    "https://www.googleapis.com/auth/userinfo.profile",
-]
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_SECONDS = 31536000
+
+CSP_FRAME_ANCESTORS = "'none'"
+
+# JWT
+
+AUTH0_DOMAIN = get_env_var("AUTH0_DOMAIN")
+AUTH0_AUDIENCE = get_env_var("AUTH0_AUDIENCE")
+
+SIMPLE_JWT = {
+    "ALGORITHM": "RS256",
+    "JWK_URL": f"https://{AUTH0_DOMAIN}/.well-known/jwks.json",
+    "AUDIENCE": AUTH0_AUDIENCE,
+    "ISSUER": f"https://{AUTH0_DOMAIN}/",
+    "USER_ID_CLAIM": "sub",
+    "AUTH_TOKEN_CLASSES": ("authz.tokens.Auth0Token",),
+}
