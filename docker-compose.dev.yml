@@ -18,15 +18,13 @@ services:
       dockerfile: ./docker/dev/Dockerfile
     env_file:
       ./backend/.env/dev/.env.django.dev
-    command: sh -c "poetry run python manage.py makemigrations &&
-      poetry run python manage.py migrate &&
-      poetry run python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000" # map your container port (second number) to your localhost port (first number)
     volumes:
       - ./backend:/backend
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:15

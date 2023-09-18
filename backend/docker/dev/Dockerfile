@@ -1,20 +1,49 @@
-# python image
-FROM python:3.11.5
-# Setting PYTHONUNBUFFERED to a non-empty value different from 0 ensures that 
-# the python output i.e. the stdout and stderr streams are sent straight to terminal 
-# (e.g. your container log) without being first buffered and that you can see the output 
-# of your application (e.g. django logs) in real time.
-ENV PYTHONUNBUFFERED 1
-# This prevents Python from writing out pyc files
-ENV PYTHONDONTWRITEBYTECODE 1
-# create a folder /backend inside docker container
-WORKDIR /backend
-COPY poetry.lock pyproject.toml /backend/
-RUN pip3 install poetry
-RUN poetry install --no-dev
-COPY common /backend/common
-COPY authz /backend/authz
-COPY django_app /backend/django_app
-COPY messages_api /backend/messages_api
-COPY gunicorn.conf.py manage.py /backend/
+FROM python:3.11-alpine as build-image
 
+ENV PYTHONUNBUFFERED=1
+
+COPY pyproject.toml poetry.lock poetry.toml ./
+
+# Install packages only needed in build stage
+RUN  \
+  apk update && \
+  apk upgrade && \
+  apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev && \
+  pip3 install poetry && \
+  poetry install --no-cache && \
+  apk --purge del .build-deps
+
+RUN poetry export -f requirements.txt --output requirements.txt
+
+# Use an official Python runtime as a parent image - Run stage
+FROM python:3.11-alpine as runtime
+
+ENV PYTHONUNBUFFERED=1
+
+# Copy venv from build stage
+COPY --from=build-image requirements.txt /app/backend/requirements.txt
+
+# Install packages that are only needed runtime, postgresql-libs is needed to suppress warning when connecting to postgres
+RUN  \
+  apk update && \
+  apk upgrade && \
+  apk add bash postgresql-libs gcc python3-dev libc-dev && \
+  rm -rf /var/cache/apk/*
+
+RUN pip3 install -r /app/backend/requirements.txt
+
+# Add the rest of the code
+COPY . /app/backend
+COPY ./scripts/ /app/
+
+# Make port 8000 available for the app
+ENV DJANGO_PORT 8000
+EXPOSE 8000
+
+# Change directory so that scripts could locate manage.py
+WORKDIR /app/backend
+
+# Be sure to use 0.0.0.0 for the host within the Docker container,
+# otherwise the browser won't be able to find it
+RUN ["chmod", "+x", "/app/entrypoint-dev.sh"]
+ENTRYPOINT [ "/app/entrypoint-dev.sh" ]
