@@ -1,59 +1,25 @@
 """
-Configuration for deployment to Heroku with Dockerfile.prod
+Configuration for development with Docker.
 """
 import os
 
-import dj_database_url
 from django_app.settings.base import *
 
-# project directory
-ROOT_DIR = BASE_DIR.parent
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get("SECRET_KEY", "production")
 
-# set SECRET_KEY for production
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
-# add heroku app url or create env var with url
-ALLOWED_HOSTS = [os.environ.get("PRODUCTION_HOST")]
+ALLOWED_HOSTS = ["backend", "localhost", "127.0.0.1"]
 
-# debug has to be false in production
-DEBUG = False
-
-# cors headers configuration
-CORS_ALLOW_ALL_ORIGINS = False
-
-INSTALLED_APPS.extend(["whitenoise.runserver_nostatic"])
-
-# whitenoise middle - has to be first in the list
-MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
-
-# extra directories with html files
-TEMPLATES[0]["DIRS"] = [os.path.join(ROOT_DIR, "frontend", "dist")]
-
-# directory where Django can find html, js, css, and other static assets
-STATICFILES_DIRS = [os.path.join(ROOT_DIR, "frontend", "dist", "assets")]
-
-# type of static files storage
-STORAGES = {
-    # ...
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.postgresql"),
+        "NAME": os.environ.get("SQL_DATABASE_NAME", "postgres"),
+        "USER": os.environ.get("SQL_USER", "postgres"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"),
+        "HOST": os.environ.get("SQL_HOST", "db"),  # set in docker-compose.yml
+        "PORT": os.environ.get("SQL_PORT", "5432"),  # default postgres port
+    }
 }
-
-# directory to which Django will move those static assets and from which it will serve them when the app is running
-STATIC_ROOT = os.path.join(ROOT_DIR, "staticfiles")
-
-STATIC_URL = "/static/"
-
-# directory where WhiteNoise can find all non-html static assets
-WHITENOISE_ROOT = os.path.join(ROOT_DIR, "frontend", "dist")
-
-# database url set at env variable in Heroku
-DATABASE_URL = os.environ.get('DATABASE_URL')
-
-# db config
-db_from_env = dj_database_url.config(
-    default=DATABASE_URL, conn_max_age=500, ssl_require=True
-)
-
-DATABASES['default'].update(db_from_env)

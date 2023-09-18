@@ -44,7 +44,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_app.middleware.Auth0Middleware",
-    "csp.middleware.CSPMiddleware",
+    # "csp.middleware.CSPMiddleware",
 ]
 
 ROOT_URLCONF = "django_app.urls"
@@ -149,7 +149,12 @@ SITE_ID = 1
 CORS_ALLOW_ALL_ORIGINS = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_SECONDS = 31536000
-CSP_FRAME_ANCESTORS = "'none'"
+# CSP_FRAME_ANCESTORS = "'none'"
+# CSP_DEFAULT_SRC = ("'none'",)
+# CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com')
+# CSP_SCRIPT_SRC = ("'self'",)
+# CSP_FONT_SRC = ("'self'", 'fonts.gstatic.com')
+# CSP_IMG_SRC = ("'self'",)
 
 # JWT
 AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN", "kha-dev.eu.auth0.com")
