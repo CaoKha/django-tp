@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django_app.views import not_found, app_error
+from django_app.views import not_found, app_error, index
 
 handler404 = not_found
 handler500 = app_error
@@ -24,4 +24,5 @@ handler500 = app_error
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/messages/", include("messages_api.urls")),
+    path("", index),
 ]

@@ -1,47 +1,44 @@
-FROM python:3.11-alpine as build-image
+# Use image with both python and node installed
+FROM nikolaik/python-nodejs:python3.11-nodejs18-alpine
 
-ENV PYTHONUNBUFFERED=1
+WORKDIR /app/backend
 
-COPY pyproject.toml poetry.lock poetry.toml ./
-
-# Install packages only needed in build stage
+# Install required libraries and Python dependencies
+COPY ./backend/requirements.txt /app/backend
 RUN  \
-  apk update && \
-  apk upgrade && \
-  apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev && \
-  pip3 install poetry && \
-  poetry install --no-cache && \
-  apk --purge del .build-deps
-
-RUN poetry export -f requirements.txt --output requirements.txt
-
-# Use an official Python runtime as a parent image - Run stage
-FROM python:3.11-alpine as runtime
-
-ENV PYTHONUNBUFFERED=1
-
-# Copy venv from build stage
-COPY --from=build-image requirements.txt /app/backend/requirements.txt
-
-# Install packages that are only needed runtime, postgresql-libs is needed to suppress warning when connecting to postgres
-RUN  \
-  apk update && \
-  apk upgrade && \
-  apk add bash postgresql-libs gcc python3-dev libc-dev && \
-  rm -rf /var/cache/apk/*
-
-RUN pip3 install -r /app/backend/requirements.txt
+    apk update && \
+    apk upgrade && \
+    apk add --no-cache bash postgresql-libs && \
+    apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev && \
+    pip3 install --upgrade pip -r requirements.txt && \
+    apk --purge del .build-deps
 
 # Add the rest of the code
-COPY . /app/backend
-COPY ./scripts/ /app/
+COPY ./backend /app/backend
+
+# Copy scripts to main directory
+COPY ./backend/scripts/ /app/
+
+# Install frontend dependencies
+WORKDIR /app/frontend
+
+COPY ./frontend/package.json ./frontend/package-lock.json /app/frontend/
+RUN npm install
+
+# Add the rest of the code
+COPY ./frontend /app/frontend
+
+# Build react static files
+RUN npm run build
+
+# Collect static files
+# RUN mkdir /app/collectedstatic
+
+WORKDIR /app
 
 # Make port 8000 available for the app
-ENV DJANGO_PORT 8000
+ENV PORT 8000
 EXPOSE 8000
-
-# Change directory so that scripts could locate manage.py
-WORKDIR /app/backend
 
 # Be sure to use 0.0.0.0 for the host within the Docker container,
 # otherwise the browser won't be able to find it

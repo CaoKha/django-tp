@@ -52,7 +52,7 @@ ROOT_URLCONF = "django_app.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -70,25 +70,12 @@ WSGI_APPLICATION = "django_app.wsgi.application"
 # Database
 
 # Github actions database
-if os.environ.get("EXTERNAL_DATABASE"):
-    DATABASES = {
-        "default": {
-            "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.postgresql"),
-            "NAME": os.environ.get("SQL_DATABASE_NAME", "postgres"),
-            "USER": os.environ.get("SQL_USER", "postgres"),
-            "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"),
-            "HOST": os.environ.get("SQL_HOST", "db"),  # set in docker-compose.yml
-            "PORT": os.environ.get("SQL_PORT", "5432"),  # default postgres port
-        }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
-# SQLite database if not using Docker for development
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-        }
-    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

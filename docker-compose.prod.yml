@@ -12,16 +12,16 @@ services:
     env_file:
       ./frontend/.env/.env.prod
 
-  backend:
+  app:
     build: 
-      context: ./backend
-      dockerfile: ./docker/prod/Dockerfile
+      context: .
+      dockerfile: ./backend/docker/prod/Dockerfile
     env_file:
       ./backend/.env/prod/.env.django.prod
     ports:
       - "8000:8000" # map your container port (second number) to your localhost port (first number)
     volumes:
-      - ./backend:/backend
+      - ./backend:/app/backend
     depends_on:
       db:
         condition: service_healthy
