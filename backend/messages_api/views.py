@@ -17,9 +17,12 @@ class PublicMessageApiView(APIView):
 class ProtectedMessageApiView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, format=None):
-        messages = "protected"
-        return Response(messages)
+    def post(self, request, format=None):
+        message = Message()
+        accessToken = request.data.get('access_token')
+        protected_message = message.create(accessToken)
+        protected_message.save()
+        return Response(request.data.get('access_token'))
 
 
 class AdminMessageApiView(APIView):

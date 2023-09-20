@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Message(models.Model):
-    text = models.CharField(max_length=30, blank=True)
+    text = models.CharField(blank=True)
     api = models.CharField(max_length=30, blank=True)
     branch = models.CharField(max_length=30, blank=True)
 

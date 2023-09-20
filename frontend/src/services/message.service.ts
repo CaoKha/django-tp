@@ -26,11 +26,14 @@ export const getProtectedResource = async (
 ): Promise<ApiResponse> => {
   const config: AxiosRequestConfig = {
     url: `${apiServerUrl}/api/messages/protected`,
-    method: "GET",
+    method: "POST",
     headers: {
       "content-type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
+    data: {
+      access_token: accessToken
+    }
   };
 
   const { data, error } = (await callExternalApi({ config })) as ApiResponse;
