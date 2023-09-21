@@ -429,14 +429,11 @@ gunicorn django_app.wsgi:application -b 0.0.0.0:"$DJANGO_PORT"
 .env.django.dev
 
 ```text
-DEBUG_ENABLED=False
-SECRET_KEY=+s@j=(0awsa!md#i_y64!cuz9v)^f4blbh!w0d+y2*0p+eazw$
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=1037601038551-d7cg6obnjcccb7nf624gb23rv9b7v801.apps.googleusercontent.com
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=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
+SECRET_KEY=
 DJANGO_ALLOWED_HOSTS=localhost 0.0.0.0 *
 DJANGO_PORT=8000
-AUTH0_DOMAIN=kha-dev.eu.auth0.com
-AUTH0_AUDIENCE=https://tp-django.example.com
+AUTH0_DOMAIN=
+AUTH0_AUDIENCE=
 DJANGO_SETTINGS_MODULE=django_app.settings.dev
 
 EXTERNAL_DATABASE=true
@@ -452,8 +449,8 @@ SQL_PORT=5432
 .env.react.dev
 
 ```text
-VITE_APP_AUTH0_DOMAIN=kha-dev.eu.auth0.com
-VITE_APP_AUTH0_CLIENT_ID=YCJCw1hfKwE33o049WzrkvTSdOXRrujT
+VITE_APP_AUTH0_DOMAIN=
+VITE_APP_AUTH0_CLIENT_ID=
 VITE_APP_AUTH0_CALLBACK_URL=http://localhost:3000/callback
 VITE_APP_AUTH0_AUDIENCE=https://tp-django.example.com
 VITE_APP_API_SERVER_URL=http://localhost:8000
