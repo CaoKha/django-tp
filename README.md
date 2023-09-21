@@ -23,11 +23,9 @@ backend/.env/
 The content of `.env.django.dev` will be somethin like this (put your own django SECRET_KEY and AUTH0 parameters)
 
 ```text
-SECRET_KEY=
-DJANGO_ALLOWED_HOSTS=localhost 0.0.0.0 *
 DJANGO_PORT=8000
-AUTH0_DOMAIN=
-AUTH0_AUDIENCE=
+AUTH0_DOMAIN=<your auth0 domain>
+AUTH0_AUDIENCE=<your auth0 audience>
 DJANGO_SETTINGS_MODULE=django_app.settings.dev 
 
 SQL_ENGINE=django.db.backends.postgresql
@@ -41,8 +39,6 @@ SQL_PORT=5432
 The content of `.env.django.prod` will be like this
 
 ```text
-SECRET_KEY=
-DJANGO_ALLOWED_HOSTS=localhost 0.0.0.0 *
 DJANGO_PORT=8000
 AUTH0_DOMAIN=<your auth0 domain>
 AUTH0_AUDIENCE=<your auth0 audience>
