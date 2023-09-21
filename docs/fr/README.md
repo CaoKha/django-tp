@@ -1,3 +1,6 @@
+## Warning
+Ce document est obsolète. Travail en cours...
+
 ## Configuration de Django avec Docker
 Si vous clonez ce projet sur votre machine locale, vous pouvez passer à l'étape 2.
 ### 1. Installations

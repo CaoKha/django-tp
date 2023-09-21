@@ -1,3 +1,6 @@
+# Warning
+This docs is deprecated. Work in progress...
+
 ## Django setup with Docker
 If you clone this project to your local machine, you can skip to step 2
 ### 1. Installations
