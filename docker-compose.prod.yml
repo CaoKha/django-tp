@@ -9,15 +9,15 @@ services:
       - ./frontend:/frontend
     ports:
       - "3000:3000"
-    env_file:
-      ./frontend/.env/.env.prod
+    # env_file:
+    #   ./frontend/.env/.env.prod
 
   backend:
     build: 
       context: ./backend
       dockerfile: ./docker/prod/Dockerfile
-    env_file:
-      ./backend/.env/prod/.env.django.prod
+    # env_file:
+    #   ./backend/.env/prod/.env.django.prod
     ports:
       - "8000:8000" # map your container port (second number) to your localhost port (first number)
     volumes:
@@ -32,8 +32,8 @@ services:
     hostname: db
     volumes:
       - db-data:/var/lib/postgresql/data
-    env_file:
-      ./backend/.env/prod/.env.postgres.prod
+    # env_file:
+    #   ./backend/.env/prod/.env.postgres.prod
     ports:
       - "5433:5432" # map the containter port 5433 to your localhost port 5434  
     healthcheck:
