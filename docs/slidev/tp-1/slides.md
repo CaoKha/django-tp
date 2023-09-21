@@ -314,7 +314,7 @@ services:
     volumes:
       - ./frontend:/frontend
     ports:
-      - "5173:3000"
+      - "3000:3000"
     env_file:
       ./frontend/.env/.env.dev
 ```
