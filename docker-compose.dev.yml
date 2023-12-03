@@ -21,7 +21,7 @@ services:
     ports:
       - "8000:8000" # map your container port (second number) to your localhost port (first number)
     volumes:
-      - ./backend:/backend
+      - ./backend:/app/backend
     depends_on:
       db:
         condition: service_healthy
